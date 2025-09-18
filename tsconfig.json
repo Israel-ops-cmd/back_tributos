@@ -39,6 +39,9 @@
     // "noUnusedParameters": true,
     // "noFallthroughCasesInSwitch": true,
     // "noPropertyAccessFromIndexSignature": true,
+    "strictPropertyInitialization": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
 
     // Recommended Options
     "strict": true,
