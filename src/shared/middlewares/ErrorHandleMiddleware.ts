@@ -1,5 +1,5 @@
-import AppError from "@shared/errors/AppError";
-import type { NextFunction, Request, Response } from "express";
+import AppError from "../errors/AppError.js"
+import type { NextFunction, Request, Response } from "express"
 
 export default class ErrorHandleMiddleware {
   public static handleError (
