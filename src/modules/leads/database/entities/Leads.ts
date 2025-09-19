@@ -12,7 +12,7 @@ export class Leads {
   email: string;
 
   @Column({ type: 'text', nullable: true})
-  message: string;
+  message: string | undefined;
 
   @Column({ type: 'timestamp', default: () => 'now()'})
   created_at: Date;
