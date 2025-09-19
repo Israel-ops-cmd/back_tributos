@@ -1,6 +1,6 @@
-import AppError from "../../../shared/errors/AppError"
-import { Leads } from "../database/entities/Leads"
-import { leadsRepositories } from "../database/repositories/LeadsRepositories"
+import AppError from "../../../shared/errors/AppError.js"
+import { Leads } from "../database/entities/Leads.js"
+import { leadsRepositories } from "../database/repositories/LeadsRepositories.js"
 
 interface ICreateLeads {
   name: string,
