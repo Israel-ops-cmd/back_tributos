@@ -1,9 +1,9 @@
 import { Request, Response } from "express"
-import ListLeadsService from "../services/ListLeadsService"
-import ShowLeadsService from "../services/ShowLeadsService"
-import CreateLeadsService from "../services/CreateLeadsService"
-import UpdateLeadsService from "../services/UpdateLeadsService"
-import DeleteLeadsService from "../services/DeleteLeadsService"
+import ListLeadsService from "../services/ListLeadsService.js"
+import ShowLeadsService from "../services/ShowLeadsService.js"
+import CreateLeadsService from "../services/CreateLeadsService.js"
+import UpdateLeadsService from "../services/UpdateLeadsService.js"
+import DeleteLeadsService from "../services/DeleteLeadsService.js"
 
 export default class LeadsControllers {
   async index(request: Request, response: Response): Promise<Response> {

@@ -1,5 +1,5 @@
-import { Leads } from "../database/entities/Leads";
-import { leadsRepositories } from "../database/repositories/LeadsRepositories";
+import { Leads } from "../database/entities/Leads.js"
+import { leadsRepositories } from "../database/repositories/LeadsRepositories.js"
 
 export default class ListLeadsService {
   async execute(): Promise<Leads[]> {

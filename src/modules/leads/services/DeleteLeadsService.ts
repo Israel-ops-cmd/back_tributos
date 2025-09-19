@@ -1,5 +1,5 @@
-import AppError from "../../../shared/errors/AppError"
-import { leadsRepositories } from "../database/repositories/LeadsRepositories"
+import AppError from "../../../shared/errors/AppError.js"
+import { leadsRepositories } from "../database/repositories/LeadsRepositories.js"
 
 interface IDeleteLeads {
   id: number
