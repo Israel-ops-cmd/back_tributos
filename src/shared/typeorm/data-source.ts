@@ -6,9 +6,11 @@ const port = process.env.DB_PORT ? Number(process.env.DB_PORT) : 5432;
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
-  host: process.env.DB_HOST!,       
+  host: process.env.DB_HOST!,
   port: port,
   username: process.env.DB_USER!,
   password: process.env.DB_PASS!,
   database: process.env.DB_NAME!,
+  entities: ['./src/modules/**/database/entities/*.{ts, js}'],
+  migrations: ['./src/shared/typeorm/migrations/*.{ts, js}']
 });
