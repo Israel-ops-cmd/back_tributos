@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    container_name: tributos-backend
+    ports:
+      - "3334:3334"
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=israelfelipe
+      - DB_PASS=as33332014
+      - DB_NAME=tributos
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    container_name: tributos-db
+    environment:
+      POSTGRES_USER: israelfelipe
+      POSTGRES_PASSWORD: as33332014
+      POSTGRES_DB: tributos
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
