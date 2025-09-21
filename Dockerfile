@@ -10,8 +10,11 @@ COPY . .
 
 RUN npx tsc
 
+COPY wait-for.sh .
+RUN chmod +x wait-for.sh
+
 ENV NODE_ENV=production
 
 EXPOSE 3334
 
-CMD ["node", "build/shared/http/server.js"]
+CMD ["./wait-for.sh", "node", "build/shared/http/server.js"]
