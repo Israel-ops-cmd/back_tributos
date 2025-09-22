@@ -1,16 +1,25 @@
-import 'reflect-metadata'
-import 'dotenv/config'
-import { DataSource } from 'typeorm'
+import 'reflect-metadata';
+import { DataSource } from 'typeorm';
+import 'dotenv/config';
 
-const port = process.env.DB_PORT ? Number(process.env.DB_PORT) : 5432;
+const isProduction = process.env.NODE_ENV === 'production';
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
-  host: process.env.DB_HOST!,
-  port: port,
-  username: process.env.DB_USER!,
-  password: process.env.DB_PASS!,
-  database: process.env.DB_NAME!,
-  entities: ['./src/modules/**/database/entities/*.{ts, js}'],
-  migrations: ['./src/shared/typeorm/migrations/*.{ts, js}']
+  url: process.env.DATABASE_URL || 'postgresql://postgres:dSazIFydaiAPSUDSFthjqetvnrERfZoX@postgres.railway.internal:5432/railway',
+  ssl: { rejectUnauthorized: false },
+  entities: isProduction
+    ? ['build/modules/**/database/entities/*.js']
+    : ['src/modules/**/database/entities/*.ts'],
+  migrations: isProduction
+    ? ['build/shared/typeorm/migrations/*.js']
+    : ['src/shared/typeorm/migrations/*.ts'],
 });
+
+// Log para conferir a conexão
+console.log('=== Database Config ===');
+console.log({
+  url: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false },
+});
+console.log('=======================');
