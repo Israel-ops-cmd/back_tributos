@@ -2,7 +2,7 @@ FROM node:20-alpine
 
 WORKDIR /app
 
-COPY package.json .
+COPY package.json package-lock.json* ./
 
 RUN npm install
 
@@ -17,4 +17,5 @@ ENV NODE_ENV=production
 
 EXPOSE 3334
 
-CMD ["./wait-for.sh", "node", "build/shared/http/server.js"]
+CMD ["node", "build/shared/http/server.js"]
+
