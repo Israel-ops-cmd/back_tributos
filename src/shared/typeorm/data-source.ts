@@ -1,33 +1,36 @@
 import 'reflect-metadata'
 import 'dotenv/config'
-import { DataSource } from 'typeorm'
+import { DataSource, DataSourceOptions } from 'typeorm'
 
-const useSSL = process.env.DB_SSL === 'true'
+const isProduction = process.env.NODE_ENV === 'production'
 
-const host = process.env.DB_HOST || process.env.PGHOST || 'localhost'
-const port = Number(process.env.DB_PORT || process.env.PGPORT || 5432)
-const username = process.env.DB_USER || process.env.PGUSER || 'postgres'
-const password = process.env.DB_PASS || process.env.PGPASSWORD || 'postgres'
-const database = process.env.DB_NAME || process.env.PGDATABASE || 'postgres'
-
-const entitiesPath =
-  process.env.NODE_ENV === 'production'
-    ? 'build/modules/**/database/entities/*.js'
-    : 'src/modules/**/database/entities/*.ts'
-
-const migrationsPath =
-  process.env.NODE_ENV === 'production'
-    ? 'build/shared/typeorm/migrations/*.js'
-    : 'src/shared/typeorm/migrations/*.ts'
-
-export const AppDataSource = new DataSource({
+// Configuração das variáveis
+const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
-  host,
-  port,
-  username,
-  password,
-  database,
-  ssl: useSSL ? { rejectUnauthorized: false } : false,
-  entities: [entitiesPath],
-  migrations: [migrationsPath],
+  host: isProduction ? process.env.DB_HOST! : process.env.DB_HOST || 'localhost',
+  port: Number(process.env.DB_PORT || 5432),
+  username: isProduction ? process.env.DB_USER! : process.env.DB_USER || 'postgres',
+  password: isProduction ? process.env.DB_PASS! : process.env.DB_PASS || 'postgres',
+  database: isProduction ? process.env.DB_NAME! : process.env.DB_NAME || 'tributos',
+  ssl: isProduction ? { rejectUnauthorized: false } : false,
+  entities: isProduction
+    ? ['build/modules/**/database/entities/*.js']
+    : ['src/modules/**/database/entities/*.ts'],
+  migrations: isProduction
+    ? ['build/shared/typeorm/migrations/*.js']
+    : ['src/shared/typeorm/migrations/*.ts'],
+}
+
+// Log para conferir se as variáveis estão corretas no deploy
+console.log('=== Database Config ===')
+console.log({
+  isProduction,
+  host: dataSourceOptions.host,
+  port: dataSourceOptions.port,
+  username: dataSourceOptions.username,
+  database: dataSourceOptions.database,
+  ssl: dataSourceOptions.ssl,
 })
+console.log('=======================')
+
+export const AppDataSource = new DataSource(dataSourceOptions)
